@@ -1,23 +1,29 @@
 import ReactMarkdown from "react-markdown";
+import { useAppSelector } from "../../app/hooks";
 
 export default function Preview() {
+  const {aboutValtech, benefits, coreCompetence,jobTitle,specificCompetence} = useAppSelector((state) => state.jobData);
 
+  const job = 
+  `
+  ## Join Valtech 
+  ${jobTitle} 
+  ## What we are looking for:
+  ${benefits} 
+  ### What you will do
+  ${coreCompetence}
+  ### What you should have
+  ${coreCompetence}
+  ### What will make you thrive:
+  ${specificCompetence}
+  ## Here’s a little about us
+  ${aboutValtech}
+  
+  `;
+    
   return (
     <>
-      <ReactMarkdown>
-        {`# ${'jobTitle'}
-        ## About Valtech 
-        ## Summary 
-        ### About the Role ${`job.description`}
-        ### Responsibilities $
-        ### Requirements 
-        ### Extra 
-        ### Benefits 
-        ## Here’s a little about work here We embrace all
-        things digital. - We talk to each other. - We have fun. - We love our
-        clients.`
-        }
-      </ReactMarkdown>
+      <ReactMarkdown>{job}</ReactMarkdown>
     </>
   );
 }

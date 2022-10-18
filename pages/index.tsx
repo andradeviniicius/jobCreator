@@ -1,13 +1,6 @@
-import {
-  AppShell,
-  Button,
-  Footer,
-  Group,
-  Header,
-  Navbar,
-  TextInput,
-} from "@mantine/core";
+import { AppShell, Button, Navbar, Stack, TextInput } from "@mantine/core";
 import type { NextPage } from "next";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   AboutValtech,
   Benefits,
@@ -15,37 +8,30 @@ import {
   Preview,
   SpecificCompetence,
 } from "../components";
+import { setJobTitle } from "../features/jobDescriptionSlice";
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <AppShell
       padding="md"
       navbar={
         <Navbar width={{ base: 300 }} p="xs">
-          <TextInput
-            placeholder=""
-            label="Job Title"
-            withAsterisk
-            onChange={(e) =>
-              console.log("Apply jobTitle to the whole docx state")
-            }
-          />
-          <Benefits />
-          <CoreCompetence />
-          <SpecificCompetence />
-          <AboutValtech />
+          <Stack>
+            <TextInput
+              placeholder=""
+              label="Job Title"
+              withAsterisk
+              onChange={(e) => dispatch(setJobTitle(e.target.value))}
+            />
+            <AboutValtech />
+            <Benefits />
+            <CoreCompetence />
+            <SpecificCompetence />
+            <Button disabled>Download File</Button>
+          </Stack>
         </Navbar>
-      }
-      footer={
-        <Footer height={60} p="md">
-          <Group position="right">
-            <Button
-              onClick={() => console.log("Group all files in a single docx")}
-            >
-              Download File
-            </Button>
-          </Group>
-        </Footer>
       }
       styles={(theme) => ({
         main: {

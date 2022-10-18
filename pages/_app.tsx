@@ -1,6 +1,8 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { Provider } from "react-redux";
+import { store } from "../app/store";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -15,9 +17,11 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <Component {...pageProps} />
-      </MantineProvider>
+      <Provider store={store}>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <Component {...pageProps} />
+        </MantineProvider>
+      </Provider>
     </>
   );
 }
