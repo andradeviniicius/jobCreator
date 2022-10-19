@@ -1,29 +1,66 @@
-import ReactMarkdown from "react-markdown";
+import { Text, Title } from "@mantine/core";
 import { useAppSelector } from "../../app/hooks";
 
 export default function Preview() {
-  const {aboutValtech, benefits, coreCompetence,jobTitle,specificCompetence} = useAppSelector((state) => state.jobData);
-
-  const job = 
-  `
-  ## Join Valtech 
-  ${jobTitle} 
-  ## What we are looking for:
-  ${benefits} 
-  ### What you will do
-  ${coreCompetence}
-  ### What you should have
-  ${coreCompetence}
-  ### What will make you thrive:
-  ${specificCompetence}
-  ## Here’s a little about us
-  ${aboutValtech}
-  
-  `;
-    
+  const {
+    aboutValtech,
+    benefits,
+    coreCompetence,
+    jobTitle,
+    specificCompetence,
+  } = useAppSelector((state) => state.jobData);
   return (
     <>
-      <ReactMarkdown>{job}</ReactMarkdown>
+      {!jobTitle ? (
+        <p>Start filling the inputs to the left to see your document :)</p>
+      ) : (
+        <>
+          <Title order={2}>Join Valtech</Title>
+          {jobTitle}
+
+          {benefits && (
+            <>
+              <Title order={3}>What we are looking for</Title>
+              <Text style={{ whiteSpace: "pre-wrap" }}>{`${benefits}`}</Text>
+            </>
+          )}
+          {coreCompetence && (
+            <>
+              <Title order={3}>What you will do</Title>
+              <Text
+                style={{ whiteSpace: "pre-wrap" }}
+              >{`${coreCompetence}`}</Text>
+            </>
+          )}
+
+          {coreCompetence && (
+            <>
+              <Title order={3}>What you should have</Title>
+              <Text
+                style={{ whiteSpace: "pre-wrap" }}
+              >{`${coreCompetence}`}</Text>
+            </>
+          )}
+
+          {specificCompetence && (
+            <>
+              <Title order={3}>What will make you thrive</Title>
+              <Text
+                style={{ whiteSpace: "pre-wrap" }}
+              >{`${specificCompetence}`}</Text>
+            </>
+          )}
+
+          {aboutValtech && (
+            <>
+              <Title order={3}>Here is a little about us:</Title>
+              <Text
+                style={{ whiteSpace: "pre-wrap" }}
+              >{`${aboutValtech}`}</Text>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }

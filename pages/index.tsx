@@ -25,10 +25,10 @@ const Home: NextPage = () => {
               withAsterisk
               onChange={(e) => dispatch(setJobTitle(e.target.value))}
             />
-            <AboutValtech />
             <Benefits />
             <CoreCompetence />
             <SpecificCompetence />
+            <AboutValtech />
             <Button disabled>Download File</Button>
           </Stack>
         </Navbar>
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
         },
       })}
     >
-      <Preview></Preview>
+      <Preview/>
     </AppShell>
   );
 };

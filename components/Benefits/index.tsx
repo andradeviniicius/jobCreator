@@ -14,11 +14,13 @@ export default function Benefits() {
       setValue(file);
 
       var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (e) {
-        dispatch(setBenefits(e.target!.result));
-        console.log(e.target!.result);
+
+      reader.onload = (e) => {
+        var text = reader.result;
+        dispatch(setBenefits(text));
       };
+      reader.readAsText(file);
+      
     } else if (file === null) {
       dispatch(setBenefits(""));
       setValue(null);

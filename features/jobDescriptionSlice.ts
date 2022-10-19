@@ -10,27 +10,39 @@ interface initialState {
 }
 
 const initialState: initialState = {
-  jobTitle: '',
-  benefits: '',
-  coreCompetence: '',
-  specificCompetence: '',
-  aboutValtech: '',
+  jobTitle: "",
+  benefits: "",
+  coreCompetence: "",
+  specificCompetence: "",
+  aboutValtech: "",
 };
 
 export const jobDescriptionSlice = createSlice({
   name: "jobDescriptionSlice",
   initialState,
   reducers: {
-    setBenefits: (state, action: PayloadAction<string | ArrayBuffer | null>) => {
+    setBenefits: (
+      state,
+      action: PayloadAction<string | ArrayBuffer | null>
+    ) => {
       state.benefits = action.payload;
     },
-    setCoreCompetence: (state, action: PayloadAction<string | ArrayBuffer | null>) => {
+    setCoreCompetence: (
+      state,
+      action: PayloadAction<string | ArrayBuffer | null>
+    ) => {
       state.coreCompetence = action.payload;
     },
-    setSpecificCompetence: (state, action: PayloadAction<string | ArrayBuffer | null>) => {
+    setSpecificCompetence: (
+      state,
+      action: PayloadAction<string | ArrayBuffer | null>
+    ) => {
       state.specificCompetence = action.payload;
     },
-    setAboutValtech: (state, action: PayloadAction<string | ArrayBuffer | null>) => {
+    setAboutValtech: (
+      state,
+      action: PayloadAction<string | ArrayBuffer | null>
+    ) => {
       state.aboutValtech = action.payload;
     },
     setJobTitle: (state, action: PayloadAction<string>) => {
