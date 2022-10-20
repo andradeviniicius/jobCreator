@@ -16,8 +16,7 @@ export default function Benefits() {
       var reader = new FileReader();
 
       reader.onload = (e) => {
-        var text = reader.result;
-        dispatch(setBenefits(text));
+        dispatch(setBenefits(reader.result));
       };
       reader.readAsText(file);
       

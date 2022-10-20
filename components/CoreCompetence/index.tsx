@@ -15,11 +15,11 @@ export default function CoreCompetence() {
       setValue(file);
 
       var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (e) {
-        dispatch(setCoreCompetence(e.target!.result));
-        console.log(e.target!.result);
+
+      reader.onload = (e) => {
+        dispatch(setCoreCompetence(reader.result!.split(/\r?\n/)));
       };
+      reader.readAsText(file);
     } else if (file === null) {
       dispatch(setCoreCompetence(""));
       setValue(null);

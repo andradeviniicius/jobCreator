@@ -15,11 +15,11 @@ export default function CoreCompetence() {
       setValue(file);
 
       var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (e) {
-        dispatch(setAboutValtech(e.target!.result));
-        console.log(e.target!.result);
+
+      reader.onload = (e) => {
+        dispatch(setAboutValtech(reader.result));
       };
+      reader.readAsText(file);
     } else if (file === null) {
       dispatch(setAboutValtech(""));
       setValue(null);
