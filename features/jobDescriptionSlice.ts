@@ -4,8 +4,8 @@ import type { RootState } from "../app/store";
 interface initialState {
   jobTitle: string | ArrayBuffer | null;
   benefits: string | ArrayBuffer | null;
-  coreCompetence: string | ArrayBuffer | null;
-  specificCompetence: string | ArrayBuffer | null;
+  coreCompetence: string[] | string | ArrayBuffer | null;
+  specificCompetence: string[] | string | ArrayBuffer | null;
   aboutValtech: string | ArrayBuffer | null;
 }
 

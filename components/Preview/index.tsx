@@ -29,7 +29,7 @@ export default function Preview() {
               <Title order={3}>What you will do</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${coreCompetence}`}</Text>
+              >{`${coreCompetence.join('\n')}`}</Text>
             </>
           )}
 
@@ -38,7 +38,7 @@ export default function Preview() {
               <Title order={3}>What you should have</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${coreCompetence}`}</Text>
+              >{`${coreCompetence.join('\n')}`}</Text>
             </>
           )}
 
@@ -47,7 +47,7 @@ export default function Preview() {
               <Title order={3}>What will make you thrive</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${specificCompetence}`}</Text>
+              >{`${specificCompetence.join('\n')}`}</Text>
             </>
           )}
 
