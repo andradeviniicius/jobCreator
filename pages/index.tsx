@@ -9,9 +9,15 @@ import {
   SpecificCompetence,
 } from "../components";
 import { setJobTitle } from "../features/jobDescriptionSlice";
+import { createWord } from "../utils/createWord";
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
+  const reduxData = useAppSelector((state) => state.jobData);
+
+  function downloadWord() {
+    createWord(reduxData);
+  }
 
   return (
     <AppShell
@@ -27,9 +33,9 @@ const Home: NextPage = () => {
             />
             <Benefits />
             <CoreCompetence />
-            <SpecificCompetence />
+            <SpecificCompetence />  
             <AboutValtech />
-            <Button disabled>Download File</Button>
+            <Button onClick={downloadWord}>Download File</Button>
           </Stack>
         </Navbar>
       }
@@ -42,7 +48,7 @@ const Home: NextPage = () => {
         },
       })}
     >
-      <Preview/>
+      <Preview />
     </AppShell>
   );
 };
