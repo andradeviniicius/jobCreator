@@ -1,6 +1,6 @@
 import { AppShell, Button, Navbar, Stack, TextInput } from "@mantine/core";
 import type { NextPage } from "next";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { UserFormProvider, useUserForm } from "../app/form-context";
 import {
   AboutValtech,
   Benefits,
@@ -8,35 +8,53 @@ import {
   Preview,
   SpecificCompetence,
 } from "../components";
-import { setJobTitle } from "../features/jobDescriptionSlice";
 import { createWord } from "../utils/createWord";
 
 const Home: NextPage = () => {
-  const dispatch = useAppDispatch();
-  const reduxData = useAppSelector((state) => state.jobData);
-
-  function downloadWord() {
-    createWord(reduxData);
-  }
+  const form = useUserForm({
+    validateInputOnChange: true,
+    initialValues: {
+      jobTitle: "",
+      benefits: null,
+      coreCompetence: null,
+      specificCompetence: null,
+      aboutValtech: "",
+    },
+    validate: {
+      jobTitle: (value) => (value.length < 1 ? "Invalid jobTitle" : null),
+      benefits: (value: any) =>
+        !value || value.type === "text/plain" ? "Wrong file type" : null,
+      coreCompetence: (value: any) => (!value ? "Wrong file type" : null),
+      aboutValtech: (value: any) => (!value ? "Wrong file type" : null),
+    },
+  });
 
   return (
     <AppShell
       padding="md"
       navbar={
         <Navbar width={{ base: 300 }} p="xs">
-          <Stack>
-            <TextInput
-              placeholder=""
-              label="Job Title"
-              withAsterisk
-              onChange={(e) => dispatch(setJobTitle(e.target.value))}
-            />
-            <Benefits />
-            <CoreCompetence />
-            <SpecificCompetence />  
-            <AboutValtech />
-            <Button onClick={downloadWord}>Download File</Button>
-          </Stack>
+          <UserFormProvider form={form}>
+            <form
+              onSubmit={form.onSubmit((e) => {
+                createWord(form.values);
+              })}
+            >
+              <Stack>
+                <TextInput
+                  placeholder="Insert a job name"
+                  label="Job Title"
+                  withAsterisk
+                  {...form.getInputProps("jobTitle")}
+                />
+                <Benefits />
+                <CoreCompetence />
+                <SpecificCompetence />
+                <AboutValtech />
+                <Button type="submit">Download File</Button>
+              </Stack>
+            </form>
+          </UserFormProvider>
         </Navbar>
       }
       styles={(theme) => ({
@@ -48,7 +66,7 @@ const Home: NextPage = () => {
         },
       })}
     >
-      <Preview />
+      <Preview form={form} />
     </AppShell>
   );
 };

@@ -1,48 +1,37 @@
 import { FileInput, Stack } from "@mantine/core";
 import { useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
-import { setBenefits } from "../../features/jobDescriptionSlice";
+import { useUserFormContext } from "../../app/form-context";
 
 export default function Benefits() {
-  const [value, setValue] = useState<File | null>(null);
-  const [error, setError] = useState(false);
-  const dispatch = useAppDispatch();
+  const [file, setFile] = useState<File | null>(null);
+  const form = useUserFormContext();
 
-  function checkFileType(file: File) {
+  function convertFileToText(file: File) {
     if (file && file.type === "text/plain") {
-      setError(false);
-      setValue(file);
-
       var reader = new FileReader();
+      setFile(file);
 
       reader.onload = (e) => {
-        dispatch(setBenefits(reader.result));
+        form.setFieldValue("benefits", reader.result);
       };
       reader.readAsText(file);
-      
-    } else if (file === null) {
-      dispatch(setBenefits(""));
-      setValue(null);
-      return;
     } else {
-      dispatch(setBenefits(""));
-      setValue(null);
-      setError(true);
+      setFile(null);
+      form.setFieldValue("benefits", null);
     }
   }
-
   return (
     <Stack>
       <FileInput
         accept="text/plain"
-        value={value}
-        onChange={checkFileType}
-        placeholder="Pick a file"
         label="Benefits"
+        placeholder="Pick a file"
         description="Only .txt files are accepted"
         withAsterisk
-        error={error && "Invalid file type"}
         required
+        {...form.getInputProps("benefits")}
+        value={file}
+        onChange={convertFileToText}
       />
     </Stack>
   );

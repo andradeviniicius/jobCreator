@@ -1,47 +1,35 @@
 import { FileInput, Stack } from "@mantine/core";
 import { useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
-import { setSpecificCompetence } from "../../features/jobDescriptionSlice";
+import { useUserFormContext } from "../../app/form-context";
 
-export default function CoreCompetence() {
-  const [value, setValue] = useState<File | null>(null);
-  const [error, setError] = useState(false);
+export default function SpecificCompetence() {
+  const form = useUserFormContext();
+  const [file, setFile] = useState<File | null>(null);
 
-  const dispatch = useAppDispatch();
-
-  function checkFileType(file: File) {
+  function convertFileToText(file: File) {
     if (file && file.type === "text/plain") {
-      setError(false);
-      setValue(file);
-
       var reader = new FileReader();
+      setFile(file);
 
       reader.onload = (e) => {
-        dispatch(setSpecificCompetence(reader.result.split(/\r?\n/)));
+        form.setFieldValue("specificCompetence", reader.result!.split(/\r?\n/));
       };
       reader.readAsText(file);
-    } else if (file === null) {
-      dispatch(setSpecificCompetence(""));
-      setValue(null);
-      return;
     } else {
-      console.log(file);
-      dispatch(setSpecificCompetence(""));
-      setValue(null);
-      setError(true);
+      setFile(null);
+      form.setFieldValue("specificCompetence", null);
     }
   }
-
   return (
     <Stack>
       <FileInput
         accept="text/plain"
-        value={value}
-        onChange={checkFileType}
         placeholder="Pick a file"
         label="Specific Competence"
         description="Only .txt files are accepted"
-        error={error && "Invalid file type"}
+        {...form.getInputProps("specificCompetence")}
+        onChange={convertFileToText}
+        value={file}
       />
     </Stack>
   );

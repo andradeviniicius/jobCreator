@@ -1,62 +1,78 @@
 import { Text, Title } from "@mantine/core";
-import { useAppSelector } from "../../app/hooks";
+import { UseFormReturnType } from "@mantine/form";
+import { FormValues } from "../../types/FormValues";
 
-export default function Preview() {
-  const {
-    aboutValtech,
-    benefits,
-    coreCompetence,
-    jobTitle,
-    specificCompetence,
-  } = useAppSelector((state) => state.jobData);
+export default function Preview({
+  form,
+}: {
+  form: UseFormReturnType<FormValues, any>;
+}) {
   return (
     <>
-      {!jobTitle ? (
+      {!form.values.jobTitle ? (
         <p>Start filling the inputs to the left to see your document :)</p>
       ) : (
         <>
           <Title order={2}>Join Valtech</Title>
-          {jobTitle}
+          {form.values.jobTitle}
 
-          {benefits && (
+          {form.values.benefits && (
             <>
               <Title order={3}>What we are looking for</Title>
-              <Text style={{ whiteSpace: "pre-wrap" }}>{`${benefits}`}</Text>
-            </>
-          )}
-          {coreCompetence && (
-            <>
-              <Title order={3}>What you will do</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${coreCompetence.join('\n')}`}</Text>
+              >{`${form.values.benefits}`}</Text>
+            </>
+          )}
+          {form.values.coreCompetence && (
+            <>
+              <Title order={3}>What you will do</Title>
+              <ul>
+                {form.values.coreCompetence.map((e, i) => {
+                  return (
+                    <>
+                      <li key={i}>
+                        <Text style={{ whiteSpace: "pre-wrap" }}>{e}</Text>
+                      </li>
+                    </>
+                  );
+                })}
+              </ul>
             </>
           )}
 
-          {coreCompetence && (
+          {form.values.coreCompetence && (
             <>
               <Title order={3}>What you should have</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${coreCompetence.join('\n')}`}</Text>
+              >{`${form.values.coreCompetence.join("\n")}`}</Text>
             </>
           )}
 
-          {specificCompetence && (
+          {form.values.specificCompetence && (
             <>
               <Title order={3}>What will make you thrive</Title>
-              <Text
-                style={{ whiteSpace: "pre-wrap" }}
-              >{`${specificCompetence.join('\n')}`}</Text>
+              <ul>
+                {form.values.specificCompetence.map((e, i) => {
+                  return (
+                    <>
+                      <li key={i}>
+                        <Text style={{ whiteSpace: "pre-wrap" }}>{e}</Text>
+                      </li>
+                    </>
+                  );
+                })}
+              </ul>
             </>
           )}
 
-          {aboutValtech && (
+          {form.values.aboutValtech && (
             <>
               <Title order={3}>Here is a little about us:</Title>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
-              >{`${aboutValtech}`}</Text>
+              >{`${form.values.aboutValtech}`}</Text>
             </>
           )}
         </>
